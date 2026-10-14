@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "netgames_os_app (com .env)",
+      "request": "launch",
+      "type": "dart",
+      "toolArgs": ["--dart-define-from-file=.env"]
+    },
+    {
+      "name": "netgames_os_app (profile, com .env)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile",
+      "toolArgs": ["--dart-define-from-file=.env"]
+    }
+  ]
+}

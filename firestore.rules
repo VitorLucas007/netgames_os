@@ -1,0 +1,25 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Página pública do cliente: lê SOMENTE o documento do próprio código (get),
+    // nunca lista a coleção, e só enquanto o link não expirou.
+    match /acompanhamentos/{codigo} {
+      allow get: if resource.data.expiraEm == null
+                 || request.time < resource.data.expiraEm;
+      allow list: if false;
+
+      // MODO DE TESTE (sem login do técnico): qualquer um escreve. Use SÓ dados fictícios.
+      // Quando o login existir, troque por: allow write: if request.auth != null;
+      allow write: if true;
+    }
+
+    // OS completa (CPF, senha do aparelho, contato).
+    match /ordens/{id} {
+      // MODO DE TESTE: aberto. Use SÓ dados fictícios.
+      // Quando o login existir, troque por: allow read, write: if request.auth != null;
+      allow read, write: if true;
+    }
+  }
+}
